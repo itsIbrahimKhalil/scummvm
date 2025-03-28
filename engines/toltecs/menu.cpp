@@ -129,6 +129,9 @@ void MenuSystem::handleEvents() {
 		case Common::EVENT_KEYDOWN:
 			handleKeyDown(event.kbd);
 			break;
+		case Common::EVENT_CUSTOM_ENGINE_ACTION_START:
+			handleKeyDown(event.customType);
+			break;
 		case Common::EVENT_RETURN_TO_LAUNCHER:
 		case Common::EVENT_QUIT:
 			_running = false;
@@ -204,7 +207,20 @@ void MenuSystem::handleKeyDown(const Common::KeyState& kbd) {
 			_editingDescription = false;
 			_vm->requestSavegame(savegameItem->_slotNum, _editingDescriptionItem->caption);
 			_running = false;
-		} else if (kbd.keycode == Common::KEYCODE_ESCAPE) {
+		}
+	}
+}
+
+void MenuSystem::handleKeyDown(const Common::CustomEventType& customType) {
+	if (_editingDescription) {
+		if (customType == kActionSpace) {
+			_editingDescriptionItem->caption += ' ';
+			restoreRect(_editingDescriptionItem->rect.left, _editingDescriptionItem->rect.top,
+				_editingDescriptionItem->rect.width() + 1, _editingDescriptionItem->rect.height() - 2);
+			setItemCaption(_editingDescriptionItem, _editingDescriptionItem->caption.c_str());
+			drawItem(_editingDescriptionID, true);
+		}
+		else if (customType == kActionEscape) {
 			_editingDescription = false;
 		}
 	}

@@ -39,7 +39,14 @@
 #include "toltecs/console.h"
 
 namespace Toltecs {
-
+enum TOLTECSAction {
+	kActionNone,
+	kActionPause,
+	kActionEscape,
+	kActionSaveGame,
+	kActionLoadGame,
+	kActionSpace,
+};
 struct ToltecsGameDescription;
 
 class AnimationPlayer;
@@ -180,6 +187,7 @@ public:
 	int16 _walkSpeedY, _walkSpeedX;
 
 	Common::KeyState _keyState;
+	Common::CustomEventType _customType;
 	int16 _mouseX, _mouseY;
 	int16 _mouseDblClickTicks;
 	bool _mouseWaitForRelease;

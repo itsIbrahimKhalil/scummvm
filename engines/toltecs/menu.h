@@ -123,7 +123,7 @@ protected:
 	void handleMouseMove(int x, int y);
 	void handleMouseClick(int x, int y);
 	void handleKeyDown(const Common::KeyState& kbd);
-
+	void handleKeyDown(const Common::CustomEventType& customType);
 	ItemID findItemAt(int x, int y);
 	Item *getItem(ItemID id);
 	void setItemCaption(Item *item, const char *caption);
